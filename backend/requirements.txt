@@ -1,0 +1,14 @@
+qiskit
+qiskit-aer
+qiskit-ibm-runtime
+
+fastapi
+uvicorn[standard]
+websockets
+
+pydantic
+numpy
+scipy
+
+python-multipart
+httpx

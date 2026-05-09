@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ──────────────────────────────────────────────────*/
+:root {
+  --void-900: #05060f;
+  --void-800: #090b1a;
+  --void-700: #0d1025;
+  --void-600: #131630;
+
+  --quantum-400: #738bfe;
+  --quantum-500: #4f5ef9;
+  --quantum-600: #3a3dee;
+
+  --plasma-400: #e879f9;
+  --plasma-500: #d946ef;
+
+  --surface-glass: rgba(13, 16, 37, 0.7);
+  --surface-glass-light: rgba(255, 255, 255, 0.03);
+  --border-subtle: rgba(99, 102, 241, 0.15);
+  --border-accent: rgba(99, 102, 241, 0.4);
+
+  --scrollbar-track: rgba(9, 11, 26, 0.8);
+  --scrollbar-thumb: rgba(99, 102, 241, 0.3);
+  --scrollbar-thumb-hover: rgba(99, 102, 241, 0.6);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────*/
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #__next { height: 100%; overflow: hidden; }
+
+/* ─── Scrollbars ─────────────────────────────────────────────────────────────*/
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* ─── Selection ──────────────────────────────────────────────────────────────*/
+::selection { background: rgba(99, 102, 241, 0.4); color: #fff; }
+
+/* ─── React Flow overrides ───────────────────────────────────────────────────*/
+.react-flow__background { background: transparent !important; }
+.react-flow__pane { cursor: default !important; }
+.react-flow__node { cursor: default; }
+.react-flow__edge-path { stroke: rgba(99,102,241,0.5) !important; stroke-width: 1.5 !important; }
+.react-flow__controls {
+  background: rgba(13,16,37,0.8) !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 8px !important;
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border-color: rgba(99,102,241,0.2) !important;
+  color: #94a3b8 !important;
+  fill: #94a3b8 !important;
+}
+.react-flow__controls-button:hover { background: rgba(99,102,241,0.15) !important; }
+
+/* ─── Monaco Editor overrides ────────────────────────────────────────────────*/
+.monaco-editor { background: transparent !important; }
+.monaco-editor .margin { background: rgba(13,16,37,0.6) !important; }
+
+/* ─── Utility classes ────────────────────────────────────────────────────────*/
+@layer components {
+  .glass-panel {
+    @apply bg-void-800/70 backdrop-blur-xl border border-quantum-500/15 rounded-xl;
+  }
+  
+  .glass-panel-hover {
+    @apply glass-panel transition-all duration-200 hover:border-quantum-500/30 hover:bg-void-800/80;
+  }
+
+  .quantum-button {
+    @apply relative px-4 py-2 rounded-lg font-body font-medium text-sm
+           bg-quantum-500/10 border border-quantum-500/30 text-quantum-300
+           hover:bg-quantum-500/20 hover:border-quantum-500/50
+           active:scale-[0.98] transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+
+  .quantum-button-primary {
+    @apply quantum-button bg-quantum-500 border-quantum-400 text-white
+           hover:bg-quantum-400 shadow-lg shadow-quantum-500/20;
+  }
+
+  .quantum-button-danger {
+    @apply quantum-button bg-red-500/10 border-red-500/30 text-red-400
+           hover:bg-red-500/20 hover:border-red-500/50;
+  }
+
+  .panel-header {
+    @apply flex items-center gap-2 px-4 py-3 border-b border-quantum-500/10
+           font-display font-semibold text-sm text-slate-300 uppercase tracking-widest;
+  }
+
+  .gate-chip {
+    @apply inline-flex items-center justify-center
+           rounded font-mono font-semibold text-xs
+           cursor-grab active:cursor-grabbing
+           select-none transition-all duration-150
+           hover:scale-110 hover:shadow-lg;
+  }
+
+  .stat-value {
+    @apply font-mono text-lg font-semibold text-quantum-300;
+  }
+
+  .stat-label {
+    @apply text-xs text-slate-500 uppercase tracking-wider font-body;
+  }
+
+  .amplitude-bar {
+    @apply relative h-2 rounded-full overflow-hidden bg-void-700;
+  }
+
+  .qubit-wire {
+    @apply absolute top-1/2 left-0 right-0 h-px bg-slate-700/60 -translate-y-px;
+  }
+
+  .circuit-label {
+    @apply font-mono text-xs text-slate-500 select-none;
+  }
+
+  /* Shimmer loading effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.0) 0%,
+      rgba(99,102,241,0.08) 50%,
+      rgba(255,255,255,0.0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Quantum glow */
+  .quantum-glow {
+    box-shadow: 0 0 0 1px rgba(99,102,241,0.3),
+                0 0 20px rgba(99,102,241,0.15),
+                0 0 40px rgba(99,102,241,0.08);
+  }
+
+  .plasma-glow {
+    box-shadow: 0 0 0 1px rgba(217,70,239,0.3),
+                0 0 20px rgba(217,70,239,0.15);
+  }
+
+  /* Dot grid background */
+  .dot-grid {
+    background-image: radial-gradient(rgba(99,102,241,0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Quantum circuit grid lines */
+  .circuit-grid {
+    background-image:
+      linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────────*/
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes circuit-flow {
+  0%   { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes phase-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Drag and Drop ──────────────────────────────────────────────────────────*/
+.dragging-gate {
+  opacity: 0.5 !important;
+  transform: scale(0.95) !important;
+}
+
+.drop-target-qubit {
+  background: rgba(99,102,241,0.15) !important;
+  border-color: rgba(99,102,241,0.5) !important;
+}
+
+/* ─── ReactFlow custom node styles ───────────────────────────────────────────*/
+.quantum-node-selected .gate-box {
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.8),
+              0 0 16px rgba(99,102,241,0.3) !important;
+}
+
+/* ─── Panel resize handle ────────────────────────────────────────────────────*/
+.resize-handle {
+  @apply w-1 cursor-col-resize bg-transparent hover:bg-quantum-500/30 transition-colors;
+}
